@@ -1,27 +1,53 @@
+// Game.cpp
 #include "Game.hpp"
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
-Game::Game() {
-    // Initialize game variables
+Game::Game() : window(sf::VideoMode(1024, 768), "RogueAscent") {
+    // Load background image
+    if (!backgroundTexture.loadFromFile("sprites/background.png")) {
+        std::cerr << "Error loading background image" << std::endl;
+    }
+    backgroundSprite.setTexture(backgroundTexture);  // Set texture to sprite
+
+    backgroundSprite.setTextureRect(sf::IntRect(0, 250, 1024, 768));
 }
 
 void Game::run() {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "RogueAscent");
+    sf::Clock clock; 
+
     while (window.isOpen()) {
+        sf::Time deltaTime = clock.restart();  // Get time since last frame
+
+        // Process events
         processEvents();
-        update();
+
+        // Update the player
+        player.update(deltaTime);
+
+        // Render the game scene
         render();
     }
 }
 
 void Game::processEvents() {
-    // Handle input
-}
-
-void Game::update() {
-    // Update game state
+    sf::Event event;
+    while (window.pollEvent(event)) {
+        if (event.type == sf::Event::Closed) {
+            window.close();
+        }
+    }
 }
 
 void Game::render() {
-    // Render the game
+    window.clear();  // Clear the screen before drawing
+
+    // Draw the background first
+    window.draw(backgroundSprite);
+
+    // Render the player
+    player.render(window);
+
+    // Display everything that was drawn to the window
+    window.display();
 }
