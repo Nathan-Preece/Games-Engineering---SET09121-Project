@@ -5,7 +5,6 @@ A wave-based action game where players battle against escalating hordes of monst
 
 ### Group Members:
 - **Nathan Preece (Scrum Master)**
-- **David Rusev (Project Owner)**
 - **Rhys Young**
 - **Euan Tennant**
 
